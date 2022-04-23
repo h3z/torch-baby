@@ -47,9 +47,10 @@ def epoch_val(
         batch_y = batch[1].to(torch.float32).to("cuda")
         pred_y = model(batch_x)
         loss = criterion(pred_y, batch_y)
+        losses.append(loss.item())
         [cb.on_val_batch_end(pred_y, batch_y, loss.item()) for cb in callbacks]
 
-    return (np.mean(losses),)
+    return np.mean(losses)
 
 
 def predict(model: torch.nn.Module, test_loader):
