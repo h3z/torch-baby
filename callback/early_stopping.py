@@ -7,7 +7,7 @@ from callback.callback import Callback
 
 class EarlyStopping(Callback):
     def __init__(self) -> None:
-        self.patience = wandb.config._early_stopping_patience
+        self.patience = wandb.config["~early_stopping_patience"]
         self.min_loss = np.inf
         self.counter = 0
         self.best_state_dict = None

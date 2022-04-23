@@ -12,12 +12,12 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 def get_parameters():
     return {
-        "_lr": 0.001,
-        "_batch_size": 128,
-        "_epochs": 200,
-        "_early_stopping_patience": 3,
-        "_optimizer": "adam",
-        "_loss": "mse",
+        "~lr": 0.001,
+        "~batch_size": 128,
+        "~epochs": 200,
+        "~early_stopping_patience": 3,
+        "~optimizer": "adam",
+        "~loss": "mse",
     }
 
 
@@ -46,10 +46,10 @@ def main():
 
     # train
     criterion = losses.get()
-    optimizer = optimizers.get()
+    optimizer = optimizers.get(model)
     callbacks = [early_stopping.EarlyStopping(), wandb_callback.WandbCallback()]
 
-    for epoch in range(wandb.config._epochs):
+    for epoch in range(wandb.config["~epochs"]):
         loss = train.epoch_train(model, optimizer, train_ds, criterion, callbacks)
         val_loss = train.epoch_val(model, val_ds, criterion, callbacks)
         print(epoch, ": train_loss", loss, "val_loss", val_loss)

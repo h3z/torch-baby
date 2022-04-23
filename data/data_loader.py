@@ -41,9 +41,9 @@ class DataLoader:
     def get(self, is_train=False) -> torch.utils.data.DataLoader:
         dataset = self.Dataset(self.data)
         sampler = self.Sampler(self.data, shuffle=is_train)
-        batch_size = wandb.config._batch_size if is_train else len(dataset)
+        batch_size = wandb.config["~batch_size"] if is_train else len(dataset)
 
-        return DataLoader(
+        return torch.utils.data.DataLoader(
             dataset=dataset,
             sampler=sampler,
             batch_size=batch_size,

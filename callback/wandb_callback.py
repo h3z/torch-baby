@@ -5,7 +5,7 @@ import wandb
 from callback.callback import Callback
 
 
-class WandbCallbak(Callback):
+class WandbCallback(Callback):
     def __init__(self) -> None:
         self.train_epoch_losses = []
         self.val_epoch_losses = []

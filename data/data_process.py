@@ -6,13 +6,10 @@ from sklearn.preprocessing import StandardScaler
 class DataProcess:
     def __init__(self, df: pd.DataFrame) -> None:
         self.scaler = StandardScaler()
-        df = df.fillna(0)
-        self.scaler.fit(df.values)
+        self.scaler.fit(df.fillna(0).values)
 
     def preprocess(self, df: pd.DataFrame) -> pd.DataFrame:
-        df = df.fillna(0)
-        df.iloc[:, :] = self.scaler.transform(df.values)
-        return df
+        return self.scaler.transform(df.fillna(0).values)
 
     def postprocess(self, preds: np.ndarray) -> np.ndarray:
         return self.scaler.inverse_transform(preds)
