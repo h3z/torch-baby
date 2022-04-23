@@ -2,7 +2,7 @@ import torch
 import numpy as np
 from typing import List
 
-from callback import Callback
+from callback.callback import Callback
 
 from tqdm.auto import tqdm
 

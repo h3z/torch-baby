@@ -1,7 +1,9 @@
 import wandb, utils, os
 from model import models
 from data import data_split, data_process, data_loader, data_reader
-from train import train, early_stopping, wandb_callback, losses, optimizers
+from train import train, losses, optimizers
+from callback import early_stopping, wandb_callback
+
 from config import config
 
 utils.fix_random()
