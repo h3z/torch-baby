@@ -10,6 +10,7 @@ from tqdm.auto import tqdm
 def epoch_train(
     model: torch.nn.Module,
     optimizer: torch.optim.Optimizer,
+    scheduler,
     train_loader,
     criterion,
     callbacks: List[Callback] = [],
@@ -28,6 +29,7 @@ def epoch_train(
         loss = criterion(pred_y, batch_y)
         loss.backward()
         optimizer.step()
+        scheduler.step()
 
         losses.append(loss.item())
 

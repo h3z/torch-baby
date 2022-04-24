@@ -1,7 +1,7 @@
 import wandb, utils, os
 from model import models
 from data import data_split, data_process, data_loader, data_reader
-from train import train, losses, optimizers
+from train import train, losses, optimizers, schedulers
 from callback import early_stopping, wandb_callback
 
 from config import config
@@ -47,10 +47,13 @@ def main():
     # train
     criterion = losses.get()
     optimizer = optimizers.get(model)
+    scheduler = schedulers.get(optimizer, train_ds)
     callbacks = [early_stopping.EarlyStopping(), wandb_callback.WandbCallback()]
 
     for epoch in range(wandb.config["~epochs"]):
-        loss = train.epoch_train(model, optimizer, train_ds, criterion, callbacks)
+        loss = train.epoch_train(
+            model, optimizer, scheduler, train_ds, criterion, callbacks
+        )
         val_loss = train.epoch_val(model, val_ds, criterion, callbacks)
         print(epoch, ": train_loss", loss, "val_loss", val_loss)
 
