@@ -36,8 +36,6 @@ def epoch_train(
 
         [cb.on_train_batch_end(pred_y, batch_y, loss.item()) for cb in callbacks]
 
-    pbar.set_description(f"{np.mean(losses):.4f}")
-
     return np.mean(losses)
 
 

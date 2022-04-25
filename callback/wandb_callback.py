@@ -16,7 +16,6 @@ class WandbCallback(Callback):
         pass
 
     def on_train_batch_end(self, preds: np.ndarray, gts: np.ndarray, loss):
-        wandb.log({"max_pred": preds.max(), "max_gt": gts.max()})
         self.train_batch_losses.append(loss)
 
     def on_epoch_end(self, loss, val_loss, model: torch.nn.Module) -> bool:
