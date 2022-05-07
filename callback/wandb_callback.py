@@ -3,6 +3,7 @@ import torch
 import wandb
 
 from callback.callback import Callback
+from sklearn import metrics
 
 
 class WandbCallback(Callback):
@@ -12,8 +13,15 @@ class WandbCallback(Callback):
         self.train_batch_losses = []
         self.val_batch_losses = []
 
-    def on_val_batch_end(self, preds: np.ndarray, gts: np.ndarray, loss):
-        pass
+    def on_val_end(self, preds: np.ndarray, gts: np.ndarray, loss):
+        gts = gts.detach().cpu()
+        preds = preds.detach().cpu()
+
+        # fpr, tpr, threshold = metrics.roc_curve(gts, preds)
+        # roc_auc = metrics.auc(fpr, tpr)
+        # wandb.log({"roc_auc": roc_auc})
+
+        return True
 
     def on_train_batch_end(self, preds: np.ndarray, gts: np.ndarray, loss):
         self.train_batch_losses.append(loss)
