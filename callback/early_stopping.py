@@ -1,6 +1,5 @@
 import numpy as np
-import torch
-import wandb
+import torch, wandb, utils
 
 from callback.callback import Callback
 
@@ -30,3 +29,5 @@ class EarlyStopping(Callback):
 
     def on_train_finish(self, model: torch.nn.Module):
         model.load_state_dict(self.best_state_dict)
+        f = utils.mktemp("best_model.pth")
+        torch.save(self.best_state_dict, f)
