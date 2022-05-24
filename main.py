@@ -1,10 +1,13 @@
-import wandb, utils, os
-from model import models
-from data import data_split, data_process, data_loader, data_reader
-from train import train, losses, optimizers, schedulers
-from callback import early_stopping, wandb_callback
+import os
 
+import wandb
+
+import utils
+from callback import early_stopping, wandb_callback
 from config import config
+from data import data_loader, data_process, data_reader, data_split
+from model import models
+from train import losses, optimizers, schedulers, train
 
 utils.fix_random()
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"

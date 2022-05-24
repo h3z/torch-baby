@@ -1,4 +1,8 @@
-import torch, random, tempfile
+import random
+import tempfile
+
+import torch
+
 from config.config import RANDOM_STATE
 
 

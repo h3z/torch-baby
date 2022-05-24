@@ -1,10 +1,10 @@
-import torch
-import numpy as np
 from typing import List
 
-from callback.callback import Callback
-
+import numpy as np
+import torch
 from tqdm.auto import tqdm
+
+from callback.callback import Callback
 
 
 def epoch_train(

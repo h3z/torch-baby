@@ -1,7 +1,9 @@
-import pandas as pd
 from typing import List
-from config.config import RANDOM_STATE
+
+import pandas as pd
 from sklearn.model_selection import train_test_split
+
+from config.config import RANDOM_STATE
 
 
 def split(df: pd.DataFrame) -> List[pd.DataFrame]:

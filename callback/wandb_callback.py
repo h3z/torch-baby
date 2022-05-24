@@ -1,9 +1,9 @@
 import numpy as np
 import torch
 import wandb
+from sklearn import metrics
 
 from callback.callback import Callback
-from sklearn import metrics
 
 
 class WandbCallback(Callback):
