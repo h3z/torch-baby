@@ -36,17 +36,18 @@ class DataLoader:
         def __len__(self) -> int:
             return self.len
 
-    def __init__(self, df: pd.DataFrame) -> None:
+    def __init__(self, df: pd.DataFrame, is_train=False) -> None:
         self.data = df.values
+        self.is_train = is_train
 
-    def get(self, is_train=False) -> torch.utils.data.DataLoader:
+    def get(self) -> torch.utils.data.DataLoader:
         dataset = self.Dataset(self.data)
-        sampler = self.Sampler(self.data, shuffle=is_train)
-        batch_size = wandb.config["~batch_size"] if is_train else len(dataset)
+        sampler = self.Sampler(self.data, shuffle=self.is_train)
+        batch_size = wandb.config["~batch_size"] if self.is_train else len(dataset)
 
         return torch.utils.data.DataLoader(
             dataset=dataset,
             sampler=sampler,
             batch_size=batch_size,
-            drop_last=is_train,
+            drop_last=self.is_train,
         )

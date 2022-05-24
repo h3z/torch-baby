@@ -38,7 +38,7 @@ def main():
     test_df = processor.preprocess(test_df)
 
     # torch DataLoader
-    train_ds = data_loader.DataLoader(train_df).get(is_train=True)
+    train_ds = data_loader.DataLoader(train_df, is_train=True).get()
     val_ds = data_loader.DataLoader(val_df).get()
     test_ds = data_loader.DataLoader(test_df).get()
 
