@@ -4,7 +4,8 @@ from typing import List
 import numpy as np
 import pandas as pd
 import torch
-import wandb
+
+from config import config
 
 
 class Dataset(torch.utils.data.Dataset):
@@ -47,7 +48,7 @@ class DataLoader:
     def get(self) -> torch.utils.data.DataLoader:
         dataset = Dataset(self.data)
         sampler = Sampler(self.data, shuffle=self.is_train)
-        batch_size = wandb.config["~batch_size"] if self.is_train else len(dataset)
+        batch_size = config["~batch_size"] if self.is_train else len(dataset)
 
         return torch.utils.data.DataLoader(
             dataset=dataset,

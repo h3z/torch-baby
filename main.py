@@ -4,29 +4,16 @@ import wandb
 
 import utils
 from callback import early_stopping, wandb_callback
-from config import config
+from config import config, prep_env
 from data import data_loader, data_process, data_reader, data_split
 from model import models
 from train import losses, optimizers, schedulers, train
 
 utils.fix_random()
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-
-
-def get_parameters():
-    return {
-        "~lr": 0.001,
-        "~batch_size": 128,
-        "~epochs": 200,
-        "~early_stopping_patience": 3,
-        "~optimizer": "adam",
-        "~loss": "mse",
-    }
 
 
 def main():
-    wandb.init(config=get_parameters(), **config.__wandb__)
-    print(wandb.config)
+    prep_env()
 
     # read csv
     df = data_reader.DataReader().train
@@ -53,7 +40,7 @@ def main():
     scheduler = schedulers.get(optimizer, train_ds)
     callbacks = [early_stopping.EarlyStopping(), wandb_callback.WandbCallback()]
 
-    for epoch in range(wandb.config["~epochs"]):
+    for epoch in range(config["~epochs"]):
         loss = train.epoch_train(
             model, optimizer, scheduler, train_ds, criterion, callbacks
         )

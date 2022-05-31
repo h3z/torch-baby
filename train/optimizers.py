@@ -1,7 +1,8 @@
 import torch
-import wandb
+
+from config import config
 
 
 def get(model: torch.nn.Module):
-    if wandb.config["~optimizer"] == "adam":
-        return torch.optim.Adam(model.parameters(), lr=wandb.config["~lr"])
+    if config["~optimizer"] == "adam":
+        return torch.optim.Adam(model.parameters(), lr=config["~lr"])

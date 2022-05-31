@@ -3,7 +3,7 @@ import tempfile
 
 import torch
 
-from config.config import RANDOM_STATE
+from config import RANDOM_STATE
 
 
 def fix_random():
