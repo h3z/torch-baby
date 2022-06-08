@@ -42,7 +42,7 @@ class Config:
     def init(self, args):
         if args.exp_file:
             self.conf = json.load(open(args.exp_file))
-        self.wandb_conf["mode"] = args.wandb_mode
+        self.wandb_conf["mode"] = args.wandb
 
     @property
     def wandb_enable(self):
@@ -93,6 +93,13 @@ def prep_env():
     Path(namespace.checkpoints).mkdir(exist_ok=True)
     print("Checkpoints:", namespace.checkpoints)
     config.init(namespace)
+    try:
+        torch.distributed.init_process_group(backend="nccl")
+        torch.cuda.set_device(torch.distributed.get_rank())
+        config.distributed = True
+    except:
+        config.distributed = False
+
     return namespace
 
 
