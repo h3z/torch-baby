@@ -1,6 +1,7 @@
 import numpy as np
 import torch
 
+import copy
 import utils
 from callback.callback import Callback
 from config import config
@@ -23,7 +24,7 @@ class EarlyStopping(Callback):
         if val_loss < self.min_loss:
             self.min_loss = val_loss
             self.counter = 0
-            self.best_state_dict = model.state_dict()
+            self.best_state_dict = copy.deepcopy(model.state_dict())
         else:
             self.counter += 1
 
