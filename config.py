@@ -43,10 +43,17 @@ class Config:
         if args.exp_file:
             self.conf = json.load(open(args.exp_file))
         self.wandb_conf["mode"] = args.wandb
+        self.checkpoints = args.checkpoints
 
     @property
     def wandb_enable(self):
         return self.wandb_conf["mode"] != __WANDB_CLOSE__
+
+    @property
+    def cuda_rank(self):
+        if self.distributed:
+            return torch.distributed.get_rank()
+        return 0
 
     def init_wandb(self):
         if self.wandb_enable != __WANDB_CLOSE__:

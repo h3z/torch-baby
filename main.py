@@ -3,7 +3,7 @@ import os
 import wandb
 
 import utils
-from callback import early_stopping, wandb_callback
+from callback import cache_checkpoints, early_stopping, wandb_callback
 from config import config, prep_env
 from data import data_loader, data_process, data_reader, data_split
 from model import models
@@ -38,7 +38,11 @@ def main():
     criterion = losses.get()
     optimizer = optimizers.get(model)
     scheduler = schedulers.get(optimizer, train_ds)
-    callbacks = [early_stopping.EarlyStopping(), wandb_callback.WandbCallback()]
+    callbacks = [
+        cache_checkpoints.CacheCheckpoints(),
+        early_stopping.EarlyStopping(),
+        wandb_callback.WandbCallback(),
+    ]
 
     for epoch in range(config["~epochs"]):
         loss = train.epoch_train(
